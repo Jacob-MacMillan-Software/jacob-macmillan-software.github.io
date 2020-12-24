@@ -25,6 +25,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Get custom software
 baseurl: "" # the subpath of your site, e.g. /blog
 google_analytics: "G-WJHBZMT7XW"
+logo: "/assets/images/jms_logo.png"
 
 #Usernames for socials
 twitter_username: jacob_software
