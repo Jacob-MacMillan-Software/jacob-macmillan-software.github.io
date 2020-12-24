@@ -1,0 +1,57 @@
+---
+---
+@charset "utf-8";
+
+.project-group {
+	//padding-top: 32%;
+
+	h1 {
+		font-size: xx-large;
+		font-weight: bold;
+		text-align: center;
+	}
+
+	/* Project Grid */
+	.project {
+		clear: both;
+		display: inline-grid;
+
+		grid-template-columns: auto auto;
+
+
+		border-bottom: 10px solid white;
+
+		.project-elem {
+			background-color: #faf7e8;
+			padding: 20px;
+			float: left;
+
+			a {
+				font-size: x-large;
+				text-decoration: underline;
+			}
+
+			p {
+				font-size: large;
+				font-weight: lighter;
+				color: grey;
+			}
+
+		}
+
+	}
+
+	/* Adjust Grid for mobile view */
+	@media only screen and (max-width: 768px) {
+		.project {
+			grid-template-columns: auto;
+		}
+	}
+}
+
+.rights-disclaimer {
+	width: 20%;
+	font-size: small;
+	font-weight: lighter;
+	color: grey;
+}
