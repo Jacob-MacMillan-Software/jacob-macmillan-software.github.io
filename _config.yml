@@ -27,11 +27,12 @@ baseurl: "" # the subpath of your site, e.g. /blog
 google_analytics: "G-WJHBZMT7XW"
 logo: "/assets/images/jms_logo.png"
 
-#Usernames for socials
+#Usernames for socials and calendly
 twitter_username: jacob_software
 github_username:  Jacob-MacMillan-Software
 instagram_username: jacobmacmillansoftware
 facebook_username: Jacob-MacMillan-Software-102720985027965
+calendly_username: jacobmacmillan
 
 #Info for SEO
 twitter:
