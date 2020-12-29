@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{%- assign author_data = site.data.authors[page.author] -%}
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+	<header class="post-header">
+		<h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
+		<p class="post-meta">
+		<time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+			{%- assign date_format = author_data.minima.date_format | default: "%b %-d, %Y" -%}
+			{{ page.date | date: date_format }}
+		</time>
+		{%- if page.author -%}
+		• <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ author_data.fullname }}</span></span>
+		{%- endif -%}</p>
+	</header>
+
+	<div class="post-content e-content" itemprop="articleBody">
+		{{ content }}
+	</div>
+	
+	{%- if author_data -%}
+	<div class="author-info">
+		<h2>Author Info</h2>
+		<h3 class="author-name {% unless author_data.bio %}no-bio{%- endunless -%}">{{ author_data.fullname }}</h3>
+		<div class="author-info-grid">
+			<div class="author-image">
+				{%- if author_data.image -%}
+				<img src="{{ author_data.image }}" alt="Photo of {{ author_name.fullname }}" />
+				{%- endif -%}
+
+				
+				{%- if author_data.social -%}
+				<div class="author-socials">
+					{%- assign real_site = site -%}
+					{%- assign site = author_data.social -%}
+					{%- include social.html -%}
+					{%- assign site = real_site -%}
+				</div>
+				{%- endif -%}
+			</div>
+			
+			{%- if author_data.bio -%}
+			<p>{{ author_data.bio }}</p>
+			{%- endif -%}
+
+		</div>
+	</div>
+	{%- endif -%}
+
+	{%- if site.disqus.shortname -%}
+	{%- include disqus_comments.html -%}
+	{%- endif -%}
+
+	<a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+</article>

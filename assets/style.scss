@@ -49,6 +49,42 @@
 	}
 }
 
+/* Author info on posts */
+.author-info {
+	border-top: 3px solid black;
+
+	h2 {
+		font-weight: bold;
+	}
+
+	.author-name {
+		padding-left: 50px;
+
+		&.no-bio {
+			padding-left: 25px;
+		}
+	}
+
+
+	.author-info-grid {
+		padding-left: 25px;
+		clear: both;
+		display: inline-grid;
+
+		grid-template-columns: auto auto;
+
+
+		.author-image {
+			padding-right: 15px;
+			grid-template-columns: auto none;
+
+			img {
+				max-height: 126px;
+			}
+		}
+	}
+}
+
 .rights-disclaimer {
 	width: 20%;
 	font-size: small;
