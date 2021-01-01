@@ -1,6 +1,6 @@
 ---
 title: Contact
-permalink: /contact/
+permalink: "/contact/"
 calendly_username: none
 ---
 

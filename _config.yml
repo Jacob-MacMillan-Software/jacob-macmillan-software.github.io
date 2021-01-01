@@ -38,6 +38,21 @@ calendly_username: jacobmacmillan
 twitter:
   username: jacob_software
 
+defaults:
+  - # Defaults for pages
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      order: 999999 # This will just use the default sort for the header menu (assuming nothing has order > 999999)
+  - # Defaults for posts
+    scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+
 # Build settings
 theme: minima
 plugins:

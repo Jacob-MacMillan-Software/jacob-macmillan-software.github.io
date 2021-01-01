@@ -1,10 +1,10 @@
 ---
-layout: home
-title: ""
+title: Home
 permalink: "/"
+order: 0
 ---
 
-# Our Services
+# Our services
 
 Here at Jacob MacMillan Software, our products are created with the highest quality materials and assembled with the most advanced techniques available. From ideation through execution, we are proud of everything we produce here. We’re sure you’ll be satisfied with our products just like all of our past customers. Check out our selection below.
 
