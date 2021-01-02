@@ -4,6 +4,8 @@ permalink: "/contact/"
 calendly_username: none
 ---
 
+<a class="button" href="mailto:me@jacobmacmillan.xyz">Send an email</a> or schedule a meeting below.
+
 <noscript><a href="https://calendly.com/jacobmacmillan">Schedule a meeting through Calendly (requires Javascript)</a></noscript>
 
 <!-- Calendly inline widget begin -->
