@@ -11,19 +11,27 @@ Here at Jacob MacMillan Software, our products are created with the highest qual
 <div class="project-group">
 
 <div class="project">
-
 <div class="project-elem">
-<h2 id="ethereum-smart-contracts">Ethereum Smart Contracts</h2>
+<h2 id="custom-website">Custom Website</h2>
 
-<p>Get a custom smart contract created to your specifications and deployed on the Ethereum Network.</p>
+<p>Get a custom static website, made to your specifications, for your business, or a personal project.</p>	
 </div>
 </div>
+
 
 <div class="project">
 <div class="project-elem">
 <h2 id="custom-server-solution">Custom Server Solution</h2>
 
 <p>Get a custom server solution for your project, be it a simple login server,  an inventory system for a video game, or any other solution you may need.</p>
+</div>
+</div>
+	
+<div class="project">
+<div class="project-elem">
+<h2 id="ethereum-smart-contracts">Ethereum Smart Contracts</h2>
+
+<p>Get a custom smart contract created to your specifications and deployed on the Ethereum Network.</p>
 </div>
 </div>
 
