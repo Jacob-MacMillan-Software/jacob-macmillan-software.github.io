@@ -40,10 +40,8 @@ Jacob created his own game engine at the age of 16.
 <div class="project-elem">
 <h2 id="xenumio">Xenum.io</h2>
 
-<p>Xenum.io is a market place for crypto-currency collectibles. It offers a set of APIs for game developers to easily integrate items into their games, as well as a set of smart contracts that allow users to create their very own collectible trading platform and to make and sell their own custom items, all with no Ethereum network fees to the creator.</p>
+<p>Xenum.io was a market place for crypto-currency collectibles. It offered a set of APIs for game developers to easily integrate items into their games, as well as a set of smart contracts that allowed users to create their very own collectible trading platform and to make and sell their own custom items, all with no Ethereum network fees to the creator.</p>
 
-
-<a href="https://xenum.io">Website</a>
 </div>
 
 
