@@ -23,7 +23,7 @@ Jacob created his own game engine at the age of 16.
 
 <p>The goal of Cycle wast to create a cloud-hosted smart phone. This would give users the ability to buy the cheapest avaiable phones, run Cycle on these phones, and have the power of a modern flagship device.</p>
 
-<a href="https://cyclephones.com/">Website</a>
+<!--<a href="https://cyclephones.com/">Website</a>-->
 </div>
 
 <div class="project-elem">
@@ -39,7 +39,7 @@ Jacob created his own game engine at the age of 16.
 
 <p>Dissolution is a first person shooter video game where all of your items are represented by crypto-currency tokens. For this project I designed both the database to manage users and their items as well as a server solution, using AWS lambda functions, to connect the game to the Etheruem network.</p>
 
-<a href="https://playdissolution.com/">Website</a>
+<!--<a href="https://playdissolution.com/">Website</a>-->
 </div>
 
 <div class="project-elem">
