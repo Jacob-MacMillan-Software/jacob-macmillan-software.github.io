@@ -9,9 +9,9 @@ permalink: "/about/"
 
 ### Founder/CEO and Lead Developer
 
-#### **Fun Fact:**
+#### **Bio:**
 
-Jacob created his own game engine at the age of 16.
+Jacob is a remarkable software developer whose passion for coding ignited at the tender age of 12 when he embarked on a self-taught journey into the world of programming. By the time he turned 16, he had already crafted his own game engine, setting the stage for a promising career in software development. Over the years, Jacob has honed his expertise in Web3 programming, specializing in the intricate art of connecting games to blockchain technology. His groundbreaking work can be seen in the popular game Dissolution, his first foray into Web3 programming and blockchain integration. He has also made significant contributions to titles like Shutdown and The Fabled, both of which seamlessly integrate with blockchain through his cutting-edge Web3 game backend platform, Xenum. Jacob's creativity knows no bounds, as he has also explored various projects, including a chess engine, showcasing his versatility as a software developer.
 
 <div class="project-group">
 <h1 id="projects">Previous Projects</h1>
