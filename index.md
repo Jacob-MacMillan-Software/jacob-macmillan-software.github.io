@@ -38,7 +38,6 @@ Here at Jacob MacMillan Software, our products are created with the highest qual
 <p>Get a custom smart contract created to your specifications and deployed on the Ethereum Network.</p>
 
 <a class="button" href="/contact">Contact Us</a>
-<a class="button" href="https://birdbrain.solutions">More Info</a>
 </div>
 </div>
 
