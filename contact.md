@@ -6,9 +6,20 @@ calendly_username: none
 
 <a class="button" href="mailto:me@jacobmacmillan.xyz">Send an email</a> or schedule a meeting below.
 
-<noscript><a href="https://calendly.com/jacobmacmillan">Schedule a meeting through Calendly (requires Javascript)</a></noscript>
+<noscript><a href="https://cal.com/jacobmacmillan">Schedule a meeting through Cal (requires Javascript)</a></noscript>
 
-<!-- Calendly inline widget begin -->
-<div class="calendly-inline-widget" data-url="https://calendly.com/jacobmacmillan/15min" style="min-width:320px;height:630px;"></div>
-<script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js"></script>
-<!-- Calendly inline widget end -->
+<!-- Cal inline embed code begins -->
+<div style="width:100%;height:100%;overflow:scroll" id="my-cal-inline"></div>
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+Cal("init", "30min", {origin:"https://cal.com"});
+
+  Cal.ns["30min"]("inline", {
+	elementOrSelector:"#my-cal-inline",
+	calLink: "jacobmacmillan/30min",
+	layout: "month_view"
+  });
+  
+  Cal.ns["30min"]("ui", {"styles":{"branding":{"brandColor":"#000000"}},"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <!-- Cal inline embed code ends -->
