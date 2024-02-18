@@ -8,6 +8,8 @@ order: 0
 
 Here at Jacob MacMillan Software, our products are created with the highest quality materials and assembled with the most advanced techniques available. From ideation through execution, we are proud of everything we produce here. We’re sure you’ll be satisfied with our products just like all of our past customers. Check out our selection below.
 
+{% include quote-form.html %}
+
 <div class="project-group">
 
 <div class="project">
