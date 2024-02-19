@@ -14,6 +14,26 @@ permalink: "/about/"
 Jacob is a remarkable software developer whose passion for coding ignited at the tender age of 12 when he embarked on a self-taught journey into the world of programming. By the time he turned 16, he had already crafted his own game engine, setting the stage for a promising career in software development. Over the years, Jacob has honed his expertise in Web3 programming, specializing in the intricate art of connecting games to blockchain technology. His groundbreaking work can be seen in the popular game Dissolution, his first foray into Web3 programming and blockchain integration. He has also made significant contributions to titles like Shutdown and The Fabled, both of which seamlessly integrate with blockchain through his cutting-edge Web3 game backend platform, Xenum. Jacob's creativity knows no bounds, as he has also explored various projects, including a chess engine, showcasing his versatility as a software developer.
 
 <div class="project-group">
+<h1 id="current-projects">Current Projects</h1>
+
+<div class="project">
+<div class="project-elem">
+<h2 id="web3gameapi">Web3 Game API</h2>
+
+<p>Web3GameAPI, as the name suggests, is an API solution to allow you to easily integrate Web3 aspects into your video game. It's a simple REST API, so it's very easy and familiar to use. Currently used by <a href="https://playshutdown.com" target="_blank">Shutdown</a> and <a href="https://thefabled.xyz" target="_blank">The Fabled</a>. For more information about how it works and how to use it, <a href="/contact">contact us</a> and try it in your project for free, or visit <a href="https://web3gameapi.dev" target="_blank">web3gameapi.dev</a> to get an idea of how it works.</p>
+</div>
+</div>
+
+<div class="project">
+<div class="project-elem">
+<h2 id="payonline">PayOnline</h2>
+
+<p>PayOnline is a simple solution for accepting online orders from your website. Check out the demo <a href="https://demo.payonline.dev">here</a>.</p>
+</div>
+</div>
+</div>
+
+<div class="project-group">
 <h1 id="projects">Previous Projects</h1>
 
 <div class="project">
