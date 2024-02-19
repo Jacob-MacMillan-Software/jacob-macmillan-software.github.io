@@ -32,6 +32,16 @@ Here at Jacob MacMillan Software, our products are created with the highest qual
 <a class="button" href="/contact">Contact Us</a>
 </div>
 </div>
+
+<div class="project">
+<div class="project-elem">
+<h2 id="ethereum-smart-contracts">Web3 Game API</h2>
+
+<p>If you're looking to integrate Web3 elements into your game project, we have the perfect solution for you: a ready-made API. <a href="mailto:me@jacobmacmillan.xyz?subject=Web3GameAPI Demo Request">Send us an email</a> to get a free demo, to see if it's right for you. More information on how it works is available on <a href="https://web3gameapi.dev" target="_blank">https://web3gameapi.dev</a></p>
+
+<a class="button" href="/contact">Contact Us</a>
+</div>
+</div>
 	
 <div class="project">
 <div class="project-elem">
