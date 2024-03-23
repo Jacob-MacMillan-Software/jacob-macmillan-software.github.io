@@ -6,7 +6,7 @@ order: 0
 
 # Our services
 
-Here at Jacob MacMillan Software, our products are created with the highest quality materials and assembled with the most advanced techniques available. From ideation through execution, we are proud of everything we produce here. We’re sure you’ll be satisfied with our products just like all of our past customers. Check out our selection below.
+Here at Jacob MacMillan Software, our products are made the most up to date knowledge we can access. From ideation through execution, we are proud of everything we produce here. We’re sure you’ll be satisfied with our products just like all of our past customers. Check out our selection below.
 
 {% include quote-form.html %}
 
