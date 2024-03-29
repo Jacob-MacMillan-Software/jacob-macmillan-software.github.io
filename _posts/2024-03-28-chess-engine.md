@@ -35,7 +35,7 @@ So, how do we do that?
 
 ## Representing the board
 
-Well, the first thing the program needs to do is draw a chess board, so lets start with that. We'll just use the same letters to represent the pieces as is used in algebraic chess notation: `K` for King, `Q` for
+The first thing the program needs to do is draw a chess board, so lets start with that. We'll just use the same letters to represent the pieces as is used in algebraic chess notation: `K` for King, `Q` for
 Queen, `N` for kNight, `R` for Rook, and `B` for Bishop. In algebraic notation, you don't put any symbol for pawns, so we'll use `P` for pawn. Upper case
 letters will represent a white piece, and a lowercase letter will be a black piece. A `.` will be an empty space. So a chess board will look like this:
 ```
@@ -50,7 +50,7 @@ R N B Q K B N R
 ```
 
 We'll assign each square a number which we'll use to keep track of what piece is on which square. We can us an 8x8 matrix (2D list/array) to represent this, but it's simpler to just use a single
-array and store 64 values. So let's do that.
+list and store 64 values. So let's do that.
 
 ```python
 board = ['R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'] + ['P' for _ in range(8)] + ['.' for _ in range(8*4)] + ['p' for _ in range(8)] + ['r','n','b','k','q','b','n','r'] 
@@ -76,7 +76,7 @@ Ok, so now let's play a move. We can get input with something as simple as
 move = input()
 ```
 
-But what do we do with that? Let's say that the first move is the very common `e5`. That's great, but how do we move the pawn? We know it's a pawn move because the piece that is moved isn't specified, and we know where the pawn needs to go to, but we aren't told which pawn to move. We know it must be the pawn on `e2` because that's the only pawn that can move to `e5`, but how do we tell our program
+But what do we do with that? Let's say that the first move is the very common `e5`. That's great, but how do we move the pawn? We know it's a pawn move because the piece that is moved isn't specified, and we know where the pawn needs to go, but we aren't told which pawn to move. We know it must be the pawn on `e2` because that's the only pawn that can move to `e5`, but how do we tell our program
 that? We could write some code to figure that out. It would be pretty simple, actually, but it gets more complicated when there are more move options. So, instead of dealing with that, let's just
 make the user tell us. Instead of the normal algebraic notation used for chess, we'll use a more specific notation. The user will tell us what square the piece they want to move is on and what square they
 want it to go to.
@@ -103,11 +103,11 @@ board[from_square] = '.'
 ```
 
 This is just one option to use to store the chess board. It does have some downsides. It uses a list of 64 strings, which are generally harder to work with than numbers. If we want to know where every pawn is on the board,
-we need to loop through the entire array and check if the value is a `P` or a `p`. There is a better way, that's more common, called a bitboard.
+we need to loop through the entire list and check if the value is a `P` or a `p`. There is a better way, that's more common, called a bitboard.
 
 ## Bitboards
 
-Bitboards are essentially just arrays, but smaller. As the name implies, a bitboard is a board made up of bits. An entire chess board shown as a bitboard can be represented as
+Bitboards are essentially just lists, but smaller. As the name implies, a bitboard is a board made up of bits. An entire chess board shown as a bitboard can be represented as
 
 ```
 1 1 1 1 1 1 1 1
@@ -122,10 +122,10 @@ Bitboards are essentially just arrays, but smaller. As the name implies, a bitbo
 
 This is just a binary number that I wrote out in a fancy way. It's `18446462598732906495` in decimal.
 
-A `1` means that there is something there, and a `0` means that there is not. This on it's own isn't very useful, except to know which squares have pieces and which don't, so instead of just one bitboard,
+A `1` means that there is something there, and a `0` means that there is not. This on it's own isn't very useful, except to know which squares have pieces and which don't. So instead of just one bitboard,
 we use at least 8. One for each of pawn, knight, bishop, rook, queen, and king, and then two more to denote the colour of that piece.
 
-As you can see, these bitboards are effectively just arrays of bits. However, even though you need more of them, you only need to store 8 numbers, instead of 64 strings, so much smaller.
+As you can see, these bitboards are effectively just lists of bits. However, even though you need more of them, you only need to store 8 numbers, instead of 64 strings, so much smaller.
 You can also get information through bitwise operations on the bitboards, which is very useful.
 
 You should note that this works perfectly, because a chessboard has 64 squares, which is the same number of bits that an integer uses in Python, and in general on 64 bit systems.
@@ -198,7 +198,7 @@ more apparent if you look at the binary representation of each part.
 '0b11111111000000000000000000000000000000001111111100000000'
 ```
 
-If you count the number of `0`s in the first result, you'll see that the `1` at the end aligns with a `1` in `bin(pawns)` as well, so the bitwise AND of both values will contain a `1` bit at some point. It doesn't matter where. If there is at least a single non-zero bit, the condition will be `True`. Because there can only be one piece on the square, the same operation with every other bitboard will be `0`, so the condition would be `False`.
+If you count the number of `0`s in the first result, you'll also see that the `1` at the end aligns with a `1` in `bin(pawns)`, so the bitwise AND of both values will contain a `1` bit at some point. It doesn't matter where. If there is at least a single non-zero bit, the condition will be `True`. Because there can only be one piece on the square, the same operation with every other bitboard will be `0`, so the condition would be `False`.
 
 Next is
 
@@ -208,7 +208,7 @@ board &= sys.maxsize ^ (1 << from_square)
 board = board & (sys.maxsize & (1 << from_square))
 ```
 
-This is more complicated, but still pretty simple. `sys.maxsize` is simply the largest possible 64 bit value. That means the bitboard it makes is simply all `1` bits. We want to set the bit to zero though, not one, so we need whatever bit represents the piece we're moving to be zero, and every other bit to be one, so it doesn't remove any other pieces. To do this we do a bitwise XOR with `^`. Any bit in `1 << from_square` that is one will be flipped to zero in the result of the XOR operation. We then do a bitwise AND with the bitboard. This will change the `from_square` bit to `0` and leave every other bit unchanged. This is the equivalent to the array operation we did before:
+This is more complicated, but still pretty simple. `sys.maxsize` is simply the largest possible 64 bit value. That means the bitboard it makes is simply all `1` bits. We want to set the bit to zero though, not one, so we need whatever bit represents the piece we're moving to be zero, and every other bit to be one, so it doesn't remove any other pieces. To do this we do a bitwise XOR with `^`. Any bit in `1 << from_square` that is one will be flipped to zero in the result of the XOR operation. We then do a bitwise AND with the bitboard. This will change the `from_square` bit to `0` and leave every other bit unchanged. This is the equivalent to the list operation we did before:
 
 ```python
 board[from_square] = '.'
@@ -382,7 +382,7 @@ For this guide, we're going to use simple piece value scoring, and we will score
 unit too, but the exact unit we use matters very little, as long as we're consistent with it.
 
 So, we'll assign each piece a value. We'll use the standard piece values, but you can adjust these if you find certain values make the engine better.
-A queen is worth 9 points, rooks are 5, bishops and knights are 3, and pawns, of course, are 1 point. What about the king? Well, you can't capture the king, so normally it doesn't need a score.
+A queen is worth 9 points, rooks are 5, bishops and knights are 3, and pawns, of course, are 1 point. What about the king? You can't capture the king, so normally it doesn't need a score.
 In fact, in our engine, it won't need a score either, however, we will give it one anyway, as it is useful with other evaluation methods. It is very arbitrary what value the king gets, but for this
 example we'll say it's worth 10000 pawns. By convention, white pieces have positive values, and black pieces have negative values.
 
