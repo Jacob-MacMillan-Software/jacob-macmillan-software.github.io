@@ -6,13 +6,13 @@ categories: guide chess
 
 # Chess Engines
 
-If you're reading this, you probably know, but a chess engine is simply a computer program that can calculate chess moves. It can calculate very bad moves, like [worstfish](https://lichess.org/@/WorstFish){:target="_blank"}{:rel="noopener noreferrer"},
-or the chess engine we will make in this article, or it can be very good like [Stockfish](https://github.com/official-stockfish/Stockfish){:target="_blank"}{:rel="noopener noreferrer"} or AlphaZero.
+If you're reading this, you probably know, but a chess engine is simply a computer program that can calculate chess moves. It can calculate very bad moves, like [worstfish](https://lichess.org/@/WorstFish){:target="_blank"}{:rel="noopener noreferrer"}
+or the chess engine we will make in this guide, or it can be very good like [Stockfish](https://github.com/official-stockfish/Stockfish){:target="_blank"}{:rel="noopener noreferrer"} or AlphaZero.
 
 # Resources
 
 There are many chess engines in the world, and many programmers who make chess engines, so there's a lot of resources on how to make them. One of the most useful is probably
-[chessprogramming.org](https://chessprogramming.org){:target="_blank"}{:rel="noopener noreferrer"}, which is essentially Wikipedia for Chess programming. It has pages explaining pretty much everything you'll need to make a chess engine, most importantly, it explains the various
+[chessprogramming.org](https://chessprogramming.org){:target="_blank"}{:rel="noopener noreferrer"}, which is essentially Wikipedia for chess programming. It has pages explaining pretty much everything you'll need to make a chess engine, most importantly, it explains the various
 techniques and algorithms for move searching and evaluation.
 
 I also made use of [this](https://wbec-ridderkerk.nl/html/UCIProtocol.html){:target="_blank"}{:rel="noopener noreferrer"} site, as it provides a very good reference for UCI, which stands for "Universal Chess Interface", which is a standardized
@@ -37,7 +37,7 @@ So, how do we do that?
 
 Well, the first thing the program needs to do is draw a chess board, so lets start with that. We'll just use the same letters to represent the pieces as is used in algebraic chess notation: `K` for King, `Q` for
 Queen, `N` for kNight, `R` for Rook, and `B` for Bishop. In algebraic notation, you don't put any symbol for pawns, so we'll use `P` for pawn. Upper case
-letters will represent a white piece, and a lowercase letter will be a black piece. and a `.` will be an empty space. So a chess board will look like this:
+letters will represent a white piece, and a lowercase letter will be a black piece. A `.` will be an empty space. So a chess board will look like this:
 ```
 r n b q k b n r
 p p p p p p p p
@@ -56,7 +56,7 @@ array and store 64 values. So let's do that.
 board = ['R', 'N', 'B', 'K', 'Q', 'B', 'N', 'R'] + ['P' for _ in range(8)] + ['.' for _ in range(8*4)] + ['p' for _ in range(8)] + ['r','n','b','k','q','b','n','r'] 
 ```
 
-and then if we can print it out with
+and then we can print it out with
 ```python
 count = 0
 for sq in board[::-1]:
@@ -70,14 +70,14 @@ You've probably noticed that the list is reversed. That's because we want the sq
 
 ## Making moves
 
-Ok, so now lets play a move. We can get input with something as simple as
+Ok, so now let's play a move. We can get input with something as simple as
 
 ```python
 move = input()
 ```
 
-But what do we do with that? Let's say that the first move is the very common `e5`. That's great, but how do we move the pawn? We know it's a pawn move because the piece that is moved isn't specified, and we know where the pawn needs to go to, but we aren't told which pawn to move. We know it must be the pawn on `e2` because that's the only pawn that can move to `e5` in the opening position, but how do we tell our program
-that? We could write some code to figure that out. It would be pretty simple, actually, but it gets more complicated when there are more move options, so, instead of dealing with that, let's just
+But what do we do with that? Let's say that the first move is the very common `e5`. That's great, but how do we move the pawn? We know it's a pawn move because the piece that is moved isn't specified, and we know where the pawn needs to go to, but we aren't told which pawn to move. We know it must be the pawn on `e2` because that's the only pawn that can move to `e5`, but how do we tell our program
+that? We could write some code to figure that out. It would be pretty simple, actually, but it gets more complicated when there are more move options. So, instead of dealing with that, let's just
 make the user tell us. Instead of the normal algebraic notation used for chess, we'll use a more specific notation. The user will tell us what square the piece they want to move is on and what square they
 want it to go to.
 
@@ -102,7 +102,7 @@ board[to_square] = board[from_square]
 board[from_square] = '.'
 ```
 
-This is just one option to use to store the chess board. It does have some downsides. It uses a list of 64 characters, which are generally harder to work with than numbers. If we want to know where every pawn is on the board,
+This is just one option to use to store the chess board. It does have some downsides. It uses a list of 64 strings, which are generally harder to work with than numbers. If we want to know where every pawn is on the board,
 we need to loop through the entire array and check if the value is a `P` or a `p`. There is a better way, that's more common, called a bitboard.
 
 ## Bitboards
@@ -110,17 +110,17 @@ we need to loop through the entire array and check if the value is a `P` or a `p
 Bitboards are essentially just arrays, but smaller. As the name implies, a bitboard is a board made up of bits. An entire chess board shown as a bitboard can be represented as
 
 ```
-11111111
-11111111
-00000000
-00000000
-00000000
-00000000
-11111111
-11111111
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
 ```
 
-This is just a binary number that I wrote out in a fancy way. It's 18446462598732906495 in decimal.
+This is just a binary number that I wrote out in a fancy way. It's `18446462598732906495` in decimal.
 
 A `1` means that there is something there, and a `0` means that there is not. This on it's own isn't very useful, except to know which squares have pieces and which don't, so instead of just one bitboard,
 we use at least 8. One for each of pawn, knight, bishop, rook, queen, and king, and then two more to denote the colour of that piece.
@@ -177,7 +177,7 @@ types), and you can capture your own pieces.
 
 ### Explaining the bitwise operations
 
-In this section I'll explain the bitwise operations. They're not relevant to the rest of this post, so if you already know how they work, or you don't care, feel free to skip to the [next section](#dont-write-your-own-board).
+In this section I'll explain the bitwise operations. They're not relevant to the rest of this guide, so if you already know how they work, or you don't care, feel free to skip to the [next section](#dont-write-your-own-board).
 
 I'll explain from top to bottom.
 
@@ -198,7 +198,7 @@ more apparent if you look at the binary representation of each part.
 '0b11111111000000000000000000000000000000001111111100000000'
 ```
 
-If you count the number of `0`s in the first result, you'll see that it aligns with a `1` in `bin(pawns)` as well, so the bitwise AND of both values will contain a `1` bit at some point. It doesn't matter where. If there is at least a single non-zero bit, the condition will be `True`. Because there can only be one piece on the square, the same operation with every other bitboard will be `0`, so the condition would be `False`.
+If you count the number of `0`s in the first result, you'll see that the `1` at the end aligns with a `1` in `bin(pawns)` as well, so the bitwise AND of both values will contain a `1` bit at some point. It doesn't matter where. If there is at least a single non-zero bit, the condition will be `True`. Because there can only be one piece on the square, the same operation with every other bitboard will be `0`, so the condition would be `False`.
 
 Next is
 
@@ -281,7 +281,7 @@ print(chess.outcome())
 That's all you need for a full two player chess game. Really, you don't even need that much. You could do it with less code if you don't print out legal moves, or bother to check for errors when
 pushing the move to the board.
 
-The only thing that might not be straight forward or immediatly clear is `board.turn`. This, as the name suggests, denotes who's turn it is. It is `True` if it is white's turn, and `False` if it
+The only thing that might not be straight forward or immediately clear is `board.turn`. This, as the name suggests, denotes who's turn it is. It is `True` if it is white's turn, and `False` if it
 is black's turn.
 
 Also potentially of note: with `board.push_san` you can provide the move in either of the two move formats we've discussed.
@@ -319,7 +319,7 @@ while not board.is_game_over():
 print(chess.outcome())
 ```
 
-Now you can play against a bot. A very bad bot, most likely, but perhaps by some act of God it'll chose the best move every time. Probably not. This bot probably suck.
+Now you can play against a bot. A very bad bot, most likely, but perhaps by some act of God it'll chose the best move every time. Probably not. This bot probably sucks.
 You'll notice it takes three arguments: `board`, `time_limit`, and `depth`. `board` and `time_limit` are pretty self-explanatory, but I'm going to explain anyway. `board` contains the game board.
 `time_limit` is the maximum amount of time that the move selection should take, specified in milliseconds. This is a requirement for supporting UCI. `depth` may not be as
 obvious. It is also required for proper UCI support, but more importantly, similar to `time_limit` it tells the engine how long to search for. The difference is instead of specifying a time limit, the
@@ -365,9 +365,9 @@ def negamax(board: chess.Board, end_time: int, depth: int) -> int:
 The first thing you'll notice is that `evaluate` just returns a random number. Later this function will return a number based on the actual position, but we'll work on that later. Let's focus on the move search for
 now.
 
-As you can see, Negamax is a recursive algorithm, meaning it calls itself. This is how it evaluates at depths more than just 1. It's pretty simple. It simply loops through every possible move, and then calls itself,
+As you can see, Negamax is a recursive algorithm, meaning it calls itself. This is how it evaluates at depths more than just 1. It's pretty simple: it loops through every possible move, and then calls itself,
 passing the new position, and a depth of one less than it itself was set to search, and negates the value (hence the name). After that it compares the newly computed position's score to the current best
-score, and if it's higher it saves it. After looping through all the moves it returns the best score. Noteably this function does not return the best move. The reason why will become clear later, but for now
+score, and if it's higher it saves it. After looping through all the moves it returns the best score. Notably this function does not return the best move. The reason why will become clear later, but for now
 just be aware that this function only returns a score. You can write your version of the function to return the move as well, but this is slightly more complicated.
 
 The reason we need to negate the value of `negamax` each cycle is because in chess you take turns playing, therefore the next iteration is actually the score for the opposite colour. Because of how the evaluation
@@ -378,7 +378,7 @@ function will work, the score for one side will be exactly the score for the oth
 The next step is to perform the evaluation of the position. There's many methods to do this, and many aspects we can use to score the position, and then still, even more methods we can use to
 represent that score.
 
-For this guide, we're going to use simple piece value scoring, and we will score all the pieces in number of pawns that they are worth. It is common to use 'centipawns' (1/100th of a pawn) as the base
+For this guide, we're going to use simple piece value scoring, and we will score all the pieces in numbers of pawns that they are worth. It is common to use 'centipawns' (1/100th of a pawn) as the base
 unit too, but the exact unit we use matters very little, as long as we're consistent with it.
 
 So, we'll assign each piece a value. We'll use the standard piece values, but you can adjust these if you find certain values make the engine better.
@@ -419,7 +419,7 @@ def evaluate(board: chess.Board) -> int:
     return score
 ```
 
-That's all the basics of a chess engine, but we are missing one thing: we don't actually call `negamax`, so let's fix that. We'll change our `gen_best_move` function.
+That's all the basics of a chess engine, but we are missing one thing: we don't actually call `negamax`; so let's fix that. We'll change our `gen_best_move` function.
 
 ```python
 from time import time
@@ -451,21 +451,21 @@ def gen_best_move(board: chess.Board, time_limit: int, depth: int) -> chess.Move
 
 This is basically the same as `negamax`, except that it returns a move instead of just an evaluation. In fact, if you change `negamax` to return both a move and an evaluation, you don't even need the
 extra `gen_best_move` function. I prefer to have the additional function, just because it tends to make the code easier to read when using more complex move search algorithms. Most importantly, you
-can use the `gen_best_move` function to perform some setup functions for `negamax` (calculating `end_time`, in this example), as `gen_best_move` is not called recursively, it's generally easier to do it here.
+can use the `gen_best_move` function to perform some setup functions for `negamax` (calculating `end_time`, in this example). As `gen_best_move` is not called recursively, it's generally easier to do it here.
 
-Putting that all together, we now have a very basic chess engine, that should make some moves that are not horrible more than it does. You can run it, and play against it, and
+Putting that all together, we now have a very basic chess engine. It should make some moves that are not horrible more than it does. You can run it, and play against it, and
 probably win, if you're any good at chess.
 
 ## Universal Chess Interface
 
 However, we're still missing one thing. Up until now we've been inputting moves by just typing the move in to `stdin`. We still don't have support for UCI. Technically UCI is still just passing moves in to
 `stdin`, but in a way that allows for more things, such as reseting the board, and starting the game at arbitrary positions. It also lets us configure the depth and time limit of the move search at
-run time, instead of having to edit the numbers in the code. And, perhaps most importantly, it also allows us to use other chess clients.
+runtime, instead of having to edit the numbers in the code. And, perhaps most importantly, it also allows us to use other chess clients.
 
 I could teach you how to write your own UCI implementation, like I did for bitboards, but writing the UCI support is my least favourite part of writing a chess engine, and bitboards are one of the things I find most
 interesting about them, so I will not be showing you how to write a UCI implementation. It is pretty simple. You can probably figure it out yourself from the UCI specification explanation I linked to in the [resources](#resources) section, or probably from some guide on [chessprogramming.org](https://chessprogramming.org){:target="_blank"}{:rel="noopener noreferrer"} or one of many other websites, I'm sure.
 
-Instead I'll be showing you how to implement the UCI implentation I've already written, and is available for free under the LGPG-3.0 on [my Github](https://github.com/Jacob-MacMillan-Software/python_chess_interface){:target="_blank"}. You can install it like you would any other Python module: using `pip`.
+Instead I'll be showing you how to implement the UCI implementation I've already written, and is available for free under the LGPG-3.0 on [my Github](https://github.com/Jacob-MacMillan-Software/python_chess_interface){:target="_blank"}. You can install it like you would any other Python module: using `pip`.
 
 ```bash
 pip install git+https://github.com/Jacob-MacMillan-Software/python_chess_interface.git
@@ -519,7 +519,7 @@ def gen_best_move(position: str, time_limit: int, depth: int, send_queue: Queue,
 def negamax(board: chess.Board, end_time: int, depth: int, recv_queue: Queue) -> (int, bool):
     # If depth is 0 or the time limit has expired, evaluate the position and return that value
     if depth == 0 or time() >= end_time:
-        return evaluate(board)
+        return (evaluate(board), False)
 
     best_score = -math.inf
     forced_stop = False
@@ -530,7 +530,7 @@ def negamax(board: chess.Board, end_time: int, depth: int, recv_queue: Queue) ->
         board.push(move)
 
         # evaluate one depth down
-        result = negamax(board, end_time, depth - 1)
+        result = negamax(board, end_time, depth - 1, recv_queue)
         score = -result[0]
 
         board.pop() # Un-simulate move
@@ -549,7 +549,7 @@ def negamax(board: chess.Board, end_time: int, depth: int, recv_queue: Queue) ->
 ```
 
 There's a few differences, but the functions remain mostly unchanged. The `gen_best_move` function now takes two additional parameters: two `Queue`s. The `send_queue` is unused in this example, but it can
-be used to send messages to the UCI class. The `recv_queue` is used to receive messages from the UCI. In this example it only accepts one command `stop`, but there are other commands,
+be used to send messages to the UCI class. The `recv_queue` is used to receive messages from the UCI. In this example it only accepts one command, `stop`, but there are other commands,
 such as setting options to change how the engine works, or possibly even change the type of chess that the engine plays, or whatever else you want to allow to be changed at runtime. The `gen_best_move` function also
 no longer returns any value. Instead it prints out 'bestmove' followed by the move in UCI format. This is what clients that interact with UCI expect. This tells them what move the engine wants to play.
 
@@ -643,7 +643,7 @@ def evaluate(board: chess.Board) -> int:
 def negamax(board: chess.Board, end_time: int, depth: int, recv_queue: Queue) -> (int, bool):
     # If depth is 0 or the time limit has expired, evaluate the position and return that value
     if depth == 0 or time() >= end_time:
-        return evaluate(board)
+        return (evaluate(board), False)
 
     best_score = -math.inf
     forced_stop = False
@@ -654,7 +654,7 @@ def negamax(board: chess.Board, end_time: int, depth: int, recv_queue: Queue) ->
         board.push(move)
 
         # evaluate one depth down
-        result = negamax(board, end_time, depth - 1)
+        result = negamax(board, end_time, depth - 1, recv_queue)
         score = -result[0]
 
         board.pop() # Un-simulate move
