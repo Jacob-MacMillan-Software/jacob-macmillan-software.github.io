@@ -35,7 +35,7 @@ So, what is replication? Simply, in the context of video games, it means cloning
 
 ## Resources
 
-As this guide is not about how to make a game, you will need to provide your own if you want to follow along with this tutorial. I would recommend a game written in Javascript or Typescript (admittedly, a small relatively small subset of open source games), but this guide will be easily applicable in any programming language.
+As this guide is not about how to make a game, you will need to provide your own if you want to follow along with this tutorial. I would recommend a game written in Javascript or Typescript (admittedly, a relatively small subset of open source games), but this guide will be easily applicable in any programming language.
 
 In this guide, we're going to be using the game from a tutorial by jslegend, which can be found [here](https://github.com/JSLegendDev/Pokemon-like-Game-Made-in-Kaboom.js){:target="_blank"}, but you can feel free to use any game you like.
 [comment]: <> (_)
@@ -43,18 +43,18 @@ In this guide, we're going to be using the game from a tutorial by jslegend, whi
 ## The server
 
 Since we already have our game, we'll start by making the game server to connect to. This will be what is called an "authoritative server". That means that the server is treated as the authority of truth in the
-game world. Whatever the server says happens is what happened, and any rumors to the contrary are ignored and discarded by the game.
+game world. Whatever the server says happens is what happened, and any rumours to the contrary are ignored and discarded by the game.
 
 There's a few protocols we can use to make this, but we're going to use one called Websockets in our example. Websockets, if you don't know, is effectively a message protocol. Similar to a phone call between you
 and your mom, the game client opens a "call" (called a "channel") with the server, and they both remain on the call for the duration of the play session. They use the channel to send messages to each other. These
 messages will contain information about the game state. They can be things like the client informing the server that the user is trying to move up, or the server informing all the connected clients that another
 player has moved to the left.
 
-Depending on the requirements to prevent cheating, and minimum acceptable latency, and things of that nature, the server verifies all actions the client claims to perform, before announcing that action to
+Depending on the requirements to prevent cheating, and minimum acceptable latency, and things of that nature, the server verifies all actions the client claims to perform before announcing that action to
 everyone else who needs to know. Since this is just a demo, we don't really care if anyone cheats, so our server will have very minimal checks on client actions, but we will discuss what could be added
 at the end.
 
-You don't have to write the server in the same language as the game, but we will in this tutorial. However, it is often easier to write the game and server in the same language, so you can share code between the two.
+You don't have to write the server in the same language as the game, like we will be doing in this tutorial, however it is often easier to write the game and server in the same language, so you can share code between the two.
 
 Ok, so let's start writing our server. With Javascript, and many other languages, we don't have to write the entire server on our own. We'll use the npm package `ws` to help us.
 
@@ -108,8 +108,6 @@ socket.onerror = (error) => {
   alert(`Error: ${error.message}`)
 }
 
-// socket.binaryType = "arraybuffer"
-
 window.setupHandler = (func) => {
   socket.onmessage = (event) => {
     func(event)
@@ -135,7 +133,7 @@ and then we'll just add a call to the `updatePlayer` function everywhere that ha
 
 If we did everything correctly, you should see your server printing out the players coordinates as you walk around the map in game. Congratulations, you have half of a replicating game. Now we need the server to tell the client where everyone else is.
 
-To do this, we will need to add a function the game to recieve messages from the server. This is pretty simple:
+To do this, we will need to add a function the game to receive messages from the server. This is pretty simple:
 
 ```js
 function handleMessage(message) {
@@ -150,7 +148,7 @@ window.setupHandler((event) => {
 As you have probably guessed, this will print out any message sent to the server. You'll notice that we pass `event.data` instead of simply `event`. The `event` object returned from the websocket has more information
 than we need for this, so we're only interested in the `data` portion, which is the exact message that we get from the server.
 
-Just printing out the message isn't very useful. Let's move the character based on the server messages. It would be better to use binary messages, but for ease of reading, we will just use plaintext. We can indicate
+Just printing out the message isn't very useful. Let's move the character based on the server messages. It would be better to use some sort of binary encoded messages, but for ease of reading, we will just use plaintext. We can indicate
 that a message adjusts the players position by using a prefix, and a separator, followed by the information in the expected format. For the prefix we'll use `position`. We can use a colon for the separator, as
 we don't expect that that will be in any of the data we want to send. The data part can simply be formatted as `x,y`.
 
@@ -202,7 +200,7 @@ recommend that you type out the code yourself.
 [comment]: <> (__)
 
 If you've done everything correctly, you should see your character gliding around the screen. Or, maybe the game you're building on even still animates the character. If it doesn't, that's normal. The game we're
-using only animates the character when it is moved through normal means, but with our new code we just plop the character at the new location. We'll fix this a little later.
+using only animates the character when it is moved through normal means, but with our new code it just plops the character at the new location. We'll fix this a little later.
 
 Since we're making a replicating game, the server should support multiple clients. If you open another client and move around, you should notice something: it's exactly the same as the first client you
 opened. You can't see any other players. Let's fix that next.
@@ -210,7 +208,7 @@ opened. You can't see any other players. Let's fix that next.
 ## Making it multiplayer
 
 Now that we have a game sending information between the server and multiple clients, but with a separate game state for each client, it should be pretty simple to make the game
-multiplayer. We just need to create a game state shared between all clients, instead of being unique to each client. So, what do we need to do that?
+multiplayer. We just need to create a game state shared between all clients, instead of being unique to each client. So, what do we need to do to do that?
 
 We need some way to broadcast a message to all clients, to tell them the game state has updated. Let's add a function to do that.
 
@@ -274,7 +272,7 @@ delete clients[clientId]
 Ok, awesome! Now our server can keep track of multiple clients at once, and send messages to each client. We're still missing something though. The clients don't know how many other clients
 there are, or where to put each of the other player characters. We'll use our broadcast function for this. We need to broadcast whenever a client connects, disconnect, or when the player on the client
 changes location. We'll add two new messages for this: `connected` and `disconnected`. We also need some way to tell each client exactly which client has changed positions, so let's modify our position
-message slight too. Instead of just `position:x,y`, we'll include the client ID as well: `clientId:position:x,y`.
+message slight too. Instead of just `position:x,y`, we'll include the client ID as well: `clientId:position:x,y`, and, last but not least, we need a message to tell each client what their own ID is. We'll call this `id`.
 
 We will also need to tell the newly connected client about every other client, and then tell every other client about it. Each client also needs to know their own client ID so they know which player is their own.
 
