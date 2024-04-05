@@ -4,7 +4,9 @@ title: Making a game replicate
 categories: guide video-games
 ---
 
-# Video Games
+# Replicating Video Games
+
+### Intro Draft 1
 
 Video games are fun. I've played hundreds of video games in my life, and I've worked on a few too. Some fun, some not. Four have been released. Three are commercial products, and one is open source.
 I didn't work on any of the game aspects of the commercial products. Instead, I worked on the backend side: login systems, leaderboards, inventory management, etc.
@@ -24,6 +26,23 @@ This is all a long way of saying "I like video games", both playing and making t
 
 This guide, however, isn't about making video games. Instead, it's about making a game replicate. If you want to learn to make a video game, this guide is not for you.
 
+### Intro Draft 2
+
+I have a lot of experience in video games. Both playing, and creating. I've played hundreds of games, and developed several, both commercial and just as a hobby. Most of the hobby ones aren't open source, and none of the commercial ones are, but a game I worked on for Global Game Jam 2019 is open source, and you can find it on GitHub [here](https://github.com/MrMcGoats/Global-Game-Jam-2019){:target="_blank"} , if you're interested. However, the repo for the game engine I used, Angel2D, is archived, and the exact branch
+seems to no longer exist, so it may be difficult to build the game, if you want to actually play it.
+
+You can find more information about my commercial projects on my [about](/about){:target="_blank"} page.
+
+I've worked on both singleplayer games, and multiplayer games. I know this is likely an unpopular opinion among game developers, but I personally prefer to make multiplayer games, at least for hobby projects. That's what this guide will be about. Not making a
+multiplayer game, but making a game multiplayer.
+
+
+### Into Draft 3
+
+I've worked on many games, both singleplayer and multiplayer. You can find them on my [personal GitHub](https://github.com/MrMcGoats/){:target="_blank"}, and information about the commercial projects I've worked on on my [about page](/about){:target="_blank"}.
+I've spent the past 5 years working on video games professionally, and even longer working on them as a hobby. I enjoy it. It's fun. I especially like the more backend aspect of game development. I enjoy the less visual aspects of programming in general.
+In that theme, this guide is not about how to make a video game. This guide is about how to make a video game replicate.
+
 ## What is replication
 
 So, what is replication? Simply, in the context of video games, it means cloning the game state of one player to that of another player. So, if player A and player B are playing a game together, and player A kills player B's character, it is replication that allows player B to see in his game that he has been killed by player A. Replication is what makes a multiplayer game multiplayer.
@@ -39,7 +58,7 @@ In this guide, we're going to be using the game from a tutorial by jslegend, whi
 Since we already have our game, we'll start by making the game server to connect to. This will be what is called an "authoritative server". That means that the server is treated as the authority of truth in the
 game world. Whatever the server says happens is what happened, and any rumours to the contrary are ignored and discarded by the game.
 
-There's a few protocols we can use to make this, but we're going to use one called Websockets in our example. Websockets, if you don't know, is effectively a message protocol. Similar to a phone call between you
+There's a few protocols we can use to make this, but we're going to use one called Websockets in our example. Websockets is effectively a message protocol. Similar to a phone call between you
 and your mom, the game client opens a "call" (called a "channel") with the server, and they both remain on the call for the duration of the play session. They use the channel to send messages to each other. These
 messages will contain information about the game state. They can be things like the client informing the server that the user is trying to move up, or the server informing all the connected clients that another
 player has moved to the left.
