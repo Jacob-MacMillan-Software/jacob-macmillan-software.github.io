@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Making a game replicate
-categories: guide viedo-games
+categories: guide video-games
 ---
 
 # Video Games
@@ -10,19 +10,14 @@ Video games are fun. I've played hundreds of video games in my life, and I've wo
 I didn't work on any of the game aspects of the commercial products. Instead, I worked on the backend side: login systems, leaderboards, inventory management, etc.
 
 If you're interested, the commercial projects were [Dissolution](https://store.steampowered.com/app/920470/Dissolution/){:target="_blank"}{:rel="noopener noreferrer"}
-[comment]: <> (_)
 which is no longer being developed, and the servers are no longer up, but it
 was a multiplayer PvP FPS game. You can still play first the singleplayer campaign mission set. We had more planned, but we never got to release them; the next game I worked on was [Shutdown](https://store.steampowered.com/app/2536460/Shutdown/){:target="_blank"}{:rel="noopener noreferrer"}.
-[comment]: <> (_)
 As of writing it is not available on Steam, but there are download links available for early versions. Shutdown is still being developed,
 as far as I'm aware; I also worked a bit on [Trinity of The Fabled](https://store.steampowered.com/app/2215710/Trinity_Of_The_Fabled/){:target="_blank"}{:rel="noopener noreferrer"}
-[comment]: <> (_)
 , although it was just called "The Fabled" when I was working on it. I worked the least on this one, of the three. It shares the backend APIs with Shutdown, both of which use my [web3 game API suite](https://web3gameapi.dev){:target="_blank"}.
-[comment]: <> (_)
 
 The open source project was made for a Global Game Jam I took part in in 2019 when I was in university. It's a rhythm game. I improved it a little bit after the game jam, but it was mostly built over a single weekend.
 You can find it on GitHub [here](https://github.com/MrMcGoats/Global-Game-Jam-2019){:target="_blank"}
-[comment]: <> (_)
 , if you're interested. However, the repo for the game engine I used, Angel2D, is archived, and the exact branch seems to no longer exist, so it may be difficult to build the game, if you want to actually play it.
 
 This is all a long way of saying "I like video games", both playing and making them. Many types of games, both singleplayer and multiplayer, which is what this guide will focus on.
@@ -38,7 +33,6 @@ So, what is replication? Simply, in the context of video games, it means cloning
 As this guide is not about how to make a game, you will need to provide your own if you want to follow along with this tutorial. I would recommend a game written in Javascript or Typescript (admittedly, a relatively small subset of open source games), but this guide will be easily applicable in any programming language.
 
 In this guide, we're going to be using the game from a tutorial by jslegend, which can be found [here](https://github.com/JSLegendDev/Pokemon-like-Game-Made-in-Kaboom.js){:target="_blank"}, but you can feel free to use any game you like.
-[comment]: <> (_)
 
 ## The server
 
@@ -197,7 +191,6 @@ ws.on('message', (message: string[]) => {
 The full code, as we've written it so far, is available [here](https://github.com/Jacob-MacMillan-Software/replicating-js-game-client/tree/8c24124e26f16c9fd31b94d0b4a48ee97630c20e){:target="_blank"} for the client,
 and [here](https://github.com/Jacob-MacMillan-Software/replicating-js-game-server/tree/6b31db22b8c581ea2ee86aba25a3209424d7c7e3){:target="_blank"} for the server. However, if you've never done this before, I would
 recommend that you type out the code yourself.
-[comment]: <> (__)
 
 If you've done everything correctly, you should see your character gliding around the screen. Or, maybe the game you're building on even still animates the character. If it doesn't, that's normal. The game we're
 using only animates the character when it is moved through normal means, but with our new code it just plops the character at the new location. We'll fix this a little later.
@@ -339,7 +332,6 @@ wss.on('connection', (ws: WebSocket) => {
 ```
 
 You can see all the changes [here](https://github.com/Jacob-MacMillan-Software/replicating-js-game-server/commit/62a3ba045749c8d501d5c5bf79bb422c9b819bb6){:target="_blank"}.
-[comment]: <> (_)
 
 Now if you open the client, if it still works with the updated server, you'll notice it's still the same as before.
 
@@ -437,8 +429,7 @@ Now if we open our client, we should be able to play with a single player as nor
 you should see a message on the original client saying that the new one has connected, and you should see a new player on your map. If you move one player, you should see it move,
 almost immediately, on both clients.
 
-You can find the client diff [here](https://github.com/Jacob-MacMillan-Software/replicating-js-game-client/commit/2100f2e266f0912ec819028b54e998ef7b794100){:target="_blank"}
-[comment]: <> (_)
+You can find the client diff [here](https://github.com/Jacob-MacMillan-Software/replicating-js-game-client/commit/2100f2e266f0912ec819028b54e998ef7b794100){:target="_blank"}.
 
 That's the basics of it. You've now made a singleplayer game into a multiplayer one.
 
