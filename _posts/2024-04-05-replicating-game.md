@@ -6,41 +6,12 @@ categories: guide video-games
 
 # Replicating Video Games
 
-### Intro Draft 1
-
-Video games are fun. I've played hundreds of video games in my life, and I've worked on a few too. Some fun, some not. Four have been released. Three are commercial products, and one is open source.
-I didn't work on any of the game aspects of the commercial products. Instead, I worked on the backend side: login systems, leaderboards, inventory management, etc.
-
-If you're interested, the commercial projects were [Dissolution](https://store.steampowered.com/app/920470/Dissolution/){:target="_blank"}{:rel="noopener noreferrer"}
-which is no longer being developed, and the servers are no longer up, but it
-was a multiplayer PvP FPS game. You can still play first the singleplayer campaign mission set. We had more planned, but we never got to release them; the next game I worked on was [Shutdown](https://store.steampowered.com/app/2536460/Shutdown/){:target="_blank"}{:rel="noopener noreferrer"}.
-As of writing it is not available on Steam, but there are download links available for early versions. Shutdown is still being developed,
-as far as I'm aware; I also worked a bit on [Trinity of The Fabled](https://store.steampowered.com/app/2215710/Trinity_Of_The_Fabled/){:target="_blank"}{:rel="noopener noreferrer"}
-, although it was just called "The Fabled" when I was working on it. I worked the least on this one, of the three. It shares the backend APIs with Shutdown, both of which use my [web3 game API suite](https://web3gameapi.dev){:target="_blank"}.
-
-The open source project was made for a Global Game Jam I took part in in 2019 when I was in university. It's a rhythm game. I improved it a little bit after the game jam, but it was mostly built over a single weekend.
-You can find it on GitHub [here](https://github.com/MrMcGoats/Global-Game-Jam-2019){:target="_blank"}
-, if you're interested. However, the repo for the game engine I used, Angel2D, is archived, and the exact branch seems to no longer exist, so it may be difficult to build the game, if you want to actually play it.
-
-This is all a long way of saying "I like video games", both playing and making them. Many types of games, both singleplayer and multiplayer, which is what this guide will focus on.
-
-This guide, however, isn't about making video games. Instead, it's about making a game replicate. If you want to learn to make a video game, this guide is not for you.
-
-### Intro Draft 2
-
 I have a lot of experience in video games. Both playing, and creating. I've played hundreds of games, and developed several, both commercial and just as a hobby. Most of the hobby ones aren't open source, and none of the commercial ones are, but a game I worked on for Global Game Jam 2019 is open source, and you can find it on GitHub [here](https://github.com/MrMcGoats/Global-Game-Jam-2019){:target="_blank"} , if you're interested. However, the repo for the game engine I used, Angel2D, is archived, and the exact branch
 seems to no longer exist, so it may be difficult to build the game, if you want to actually play it.
 
-You can find more information about my commercial projects on my [about](/about){:target="_blank"} page.
+You can find more information about my commercial projects on my [about page](/about){:target="_blank"}.
 
-I've worked on both singleplayer games, and multiplayer games. I know this is likely an unpopular opinion among game developers, but I personally prefer to make multiplayer games, at least for hobby projects. That's what this guide will be about. Not making a
-multiplayer game, but making a game multiplayer.
-
-
-### Into Draft 3
-
-I've worked on many games, both singleplayer and multiplayer. You can find them on my [personal GitHub](https://github.com/MrMcGoats/){:target="_blank"}, and information about the commercial projects I've worked on on my [about page](/about){:target="_blank"}.
-I've spent the past 5 years working on video games professionally, and even longer working on them as a hobby. I enjoy it. It's fun. I especially like the more backend aspect of game development. I enjoy the less visual aspects of programming in general.
+I especially like the more backend aspect of game development. I enjoy the less visual aspects of programming in general.
 In that theme, this guide is not about how to make a video game. This guide is about how to make a video game replicate.
 
 ## What is replication
