@@ -3,6 +3,7 @@ Generate every a Jekyll site for every comobonation of test groups
 """
 
 import os
+import sys
 import itertools
 
 def get_working_directory() -> str:
@@ -27,7 +28,7 @@ def get_test_groups(directory: str) -> list:
 
     return test_groups
 
-def gen_test_sites(directory: str, test_groups: list) -> list:
+def gen_test_sites(directory: str, test_groups: list, dev_mode: bool = False) -> list:
     """
     Generates a Jekyll site for each test group. Renames the build directory to the name
     of the test group.
@@ -54,6 +55,10 @@ def gen_test_sites(directory: str, test_groups: list) -> list:
         # or _config_test_, and _site appended to the end
         group_name = "_".join([g.split(".")[0].split("_")[-1] for g in group]) + "_site"
 
+        # If we're in dev mode, put the config file "_config_development.yml" at the front of the group
+        if dev_mode:
+            group = ("_config_development.yml",) + group
+
         # Call the build script with the test groups
         os.system(f"bundle exec jekyll build --config _config.yml,{','.join(group)}")
 
@@ -72,9 +77,14 @@ def gen_test_sites(directory: str, test_groups: list) -> list:
     return site_paths
 
 if __name__ == "__main__":
+    # Check if the caller passed "--dev" or "-d" as an argument
+    dev_mode = False
+    if len(sys.argv) > 1 and (sys.argv[1] == "--dev" or sys.argv[1] == "-d"):
+        dev_mode = True
+
     working_dir = get_working_directory()
     test_groups = get_test_groups(working_dir)
-    site_paths = gen_test_sites(working_dir, test_groups)
+    site_paths = gen_test_sites(working_dir, test_groups, dev_mode)
     # Make site_paths a valid JSON string
     site_paths = str(site_paths).replace("'", "\"")
     print(site_paths)
