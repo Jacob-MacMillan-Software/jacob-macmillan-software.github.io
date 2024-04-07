@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "gen-test-sites"
+version = "0.1.0"
+description = "Generate A/B test sites for Jekyll website"
+authors = ["Jacob <31115470+MrMcGoats@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+pylint = "^3.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
