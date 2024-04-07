@@ -26,6 +26,9 @@ def get_test_groups(directory: str) -> list:
     for i in range(1, len(test_group_files) + 1):
         test_groups += list(itertools.combinations(test_group_files, i))
 
+    # Add a group with no test files for the base site
+    test_groups.append(())
+
     return test_groups
 
 def gen_test_sites(directory: str, test_groups: list, dev_mode: bool = False) -> list:
