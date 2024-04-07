@@ -43,6 +43,12 @@ def gen_test_sites(directory: str, test_groups: list) -> list:
     if os.path.exists("_site"):
         os.system("rm -rf _site")
 
+    if not os.path.exists("_test_sites"):
+        os.mkdir("_test_sites")
+    else:
+        os.system("rm -rf _test_sites")
+        os.mkdir("_test_sites")
+
     for group in test_groups:
         # Group name is the combination of all the test group names without the file extension
         # or _config_test_, and _site appended to the end
@@ -54,8 +60,11 @@ def gen_test_sites(directory: str, test_groups: list) -> list:
         # Rename the build directory to the group name
         os.rename("_site", group_name)
 
+        # Move new site to _test_sites directory
+        os.system(f"mv {group_name} _test_sites")
+
         # Add the path to the site to the list
-        site_paths.append(os.path.join(directory, group_name))
+        site_paths.append(os.path.join(directory + "/_test_sites", group_name))
 
     # Change back to the original directory
     os.chdir(old_dir)
@@ -66,4 +75,6 @@ if __name__ == "__main__":
     working_dir = get_working_directory()
     test_groups = get_test_groups(working_dir)
     site_paths = gen_test_sites(working_dir, test_groups)
+    # Make site_paths a valid JSON string
+    site_paths = str(site_paths).replace("'", "\"")
     print(site_paths)

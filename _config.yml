@@ -83,3 +83,5 @@ exclude:
   - vendor/ruby/
   - LICENSE
   - CNAME
+  - scripts/
+  - _test_sites/
