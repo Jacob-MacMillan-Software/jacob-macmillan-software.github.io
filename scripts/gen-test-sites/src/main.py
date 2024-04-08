@@ -53,6 +53,10 @@ def gen_test_sites(directory: str, test_groups: list, dev_mode: bool = False) ->
         os.system("rm -rf _test_sites")
         os.mkdir("_test_sites")
 
+    # If we're not in dev mode, set JEKYLL_ENV to production
+    if not dev_mode:
+        os.environ["JEKYLL_ENV"] = "production"
+
     for group in test_groups:
         # Group name is the combination of all the test group names without the file extension
         # or _config_test_, and _site appended to the end
