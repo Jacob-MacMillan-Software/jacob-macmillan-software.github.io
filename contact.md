@@ -4,8 +4,35 @@ permalink: "/contact/"
 calendly_username: none
 ---
 
-<a class="button" href="mailto:me@jacobmacmillan.xyz">Send an email</a> or schedule a meeting below.
+{%- if site.upwork_profile -%}
+<a class="button" href="{{ site.upwork_profile }}" target="_blank">Contact me on UpWork</a>,  {% if site.nocal %} or {% if site.formspree %}
+ send a message with the form below
+{% endif %}
+{% endif %}
+{%- endif -%}
 
+{%- unless site.formspree -%}
+<a class="button" href="mailto:me@jacobmacmillan.xyz">Send an email</a> 
+{%- unless site.nocal -%}
+or schedule a meeting below.
+{%- endunless -%}
+
+{%- else -%}
+<div class="formspree">
+<form class="formspree" action="{{ site.formspree }}" method="POST">
+  <label>
+    <input type="email" name="email" placeholder="Your email address">
+  </label>
+  <label>
+    <textarea name="message" placeholder="Your message"></textarea>
+  </label>
+  <!-- your other form fields go here -->
+  <button type="submit">Send</button>
+</form>
+</div>
+{%- endunless -%}
+
+{%- unless site.nocal -%}
 <noscript><a href="https://cal.com/jacobmacmillan">Schedule a meeting through Cal (requires Javascript)</a></noscript>
 
 <!-- Cal inline embed code begins -->
@@ -23,3 +50,4 @@ Cal("init", "30min", {origin:"https://cal.com"});
   Cal.ns["30min"]("ui", {"styles":{"branding":{"brandColor":"#000000"}},"hideEventTypeDetails":false,"layout":"month_view"});
   </script>
   <!-- Cal inline embed code ends -->
+{%- endunless -%}

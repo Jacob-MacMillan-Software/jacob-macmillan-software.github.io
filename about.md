@@ -2,7 +2,7 @@
 title: About
 permalink: "/about/"
 ---
-
+{% unless site.portfolio %}
 ## Jacob MacMillan
 
 [![Photo of Jacob](/assets/images/jacobprofile.png)](https://www.linkedin.com/in/jacob-macmillan-872345162/)
@@ -13,6 +13,7 @@ permalink: "/about/"
 
 Jacob is a remarkable software developer whose passion for coding ignited at the tender age of 12 when he embarked on a self-taught journey into the world of programming. By the time he turned 16, he had already crafted his own game engine, setting the stage for a promising career in software development. Over the years, Jacob has honed his expertise in Web3 programming, specializing in the intricate art of connecting games to blockchain technology. His groundbreaking work can be seen in the popular game Dissolution, his first foray into Web3 programming and blockchain integration. He has also made significant contributions to titles like Shutdown and The Fabled, both of which seamlessly integrate with blockchain through his cutting-edge Web3 game backend platform, Xenum. Jacob's creativity knows no bounds, as he has also explored various projects, including a chess engine, showcasing his versatility as a software developer.
 
+{% endunless %}
 <div class="project-group">
 <h1 id="current-projects">Current Projects</h1>
 
@@ -44,6 +45,7 @@ Jacob is a remarkable software developer whose passion for coding ignited at the
 <p>The goal of Cycle wast to create a cloud-hosted smart phone. This would give users the ability to buy the cheapest avaiable phones, run Cycle on these phones, and have the power of a modern flagship device.</p>
 
 <!--<a href="https://cyclephones.com/">Website</a>-->
+<a href="https://wefunder.com/cycle.phones" target="_blank">More Info</a>
 </div>
 
 <div class="project-elem">
@@ -60,6 +62,7 @@ Jacob is a remarkable software developer whose passion for coding ignited at the
 <p>Dissolution is a first person shooter video game where all of your items are represented by crypto-currency tokens. For this project I designed both the database to manage users and their items as well as a server solution, using AWS lambda functions, to connect the game to the Etheruem network.</p>
 
 <!--<a href="https://playdissolution.com/">Website</a>-->
+<a href="https://store.steampowered.com/app/920470/Dissolution/" target="_blank">Try it on Steam</a>
 </div>
 
 <div class="project-elem">
@@ -77,6 +80,8 @@ Jacob is a remarkable software developer whose passion for coding ignited at the
 <h2 id="xenumio">Xenum.io</h2>
 
 <p>Xenum.io was a market place for crypto-currency collectibles. It offered a set of APIs for game developers to easily integrate items into their games, as well as a set of smart contracts that allowed users to create their very own collectible trading platform and to make and sell their own custom items, all with no Ethereum network fees to the creator.</p>
+
+<a href="https://web.archive.org/web/20200801000000*/xenum.io" target="_blank">Archived Website</a>
 
 </div>
 
