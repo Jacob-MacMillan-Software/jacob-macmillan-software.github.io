@@ -318,9 +318,9 @@ Now you can open your web browser, navigate to the URL of your newly deployed wo
 
 You can do this manually with `npx wrangler r2 object put <path in bucket> --file <file>`, or you can upload them through the web interface, or you can write a script to do it automatically, which is what we're going to do in the next section.
 
-## Extra Utility Scripts
+# (Optional) Extra Utility Scripts
 
-### Uploading to R2 Bucket
+## Uploading to R2 Bucket
 
 Before we get started on the script, we need to get all our different experiment website builds together. We'll put them in a folder called `_test_sites`.
 
@@ -441,4 +441,100 @@ The full script is available [here](https://github.com/Jacob-MacMillan-Software/
 
 ## Automatically building the websites
 
+This website also utilizes a Python script to automatically build each and every combinations of experiments.
+
+If there are some experiments that are mutually exclusive, you can simply disable the other one in the config file for
+the one you want. Since the config files are read in order, and later ones override the previous ones, this will result in only the last test in the list being used. Or, you can do what I did and have every test work
+correctly with every other test. Regardless, let's start writing our build script.
+
+So, what exactly does the script need to do? It needs to navigate to the folder where all our website source is located (or at least know where to find the files), remove the previous website builds, get a list of every experiment we have,
+and then run `bundle exec jekyll build -c <configs>` for every possible combination of config files.
+
+We'll put our script in the folder `scripts/gen-test-sites/src`, so we can get the path to the website source with the following function:
+
+```python
+def get_working_directory() -> str:
+    return os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+```
+
+This returns the path to the folder three folders up from the script that we're running. This works regardless of how you call the script.
+
+The next step is to write a function to generate all the possible experiment groups. For this website, order doesn't matter, but if you have different behaviour depending on the order (ie. mutually exclusive experiments), you'll have to modify this function slightly.
+To get every test group, we simply search the website directory for every YAML file starting with `_config_test_`. Then we can simply use `itertools.combinations` to construct our experiment groups.
+
+```python
+def get_test_groups(directory: str) -> list:
+    # Get a list of each experiment
+    test_group_files = [f for f in os.listdir(directory) if f.startswith("_config_test_") and f.endswith(".yml")]
+
+    # Get every unique combination of tests (order doesn't matter)
+    test_groups = []
+    for i in range(1, len(test_group_files) + 1):
+        test_groups += list(itertools.combinations(test_group_files, i))
+
+    # Add an empty test group to build the base site
+    test_groups.append(())
+
+    return test_groups
+```
+
+And now all that's left to do is build the sites. We can do this by simply calling `bundle exec jekyll build` as we would on the command line, through `os.system`. We need a bit of setup before that though. We need to cleanup old sites, and
+make sure we have a folder to put the new ones, which we'll call `_test_sites` to match our upload script.
+
+```python
+def gen_test_sites(directory: str, test_groups: list) -> list:
+    site_paths = []
+
+    old_dir = os.getcwd()
+    
+    # Move to the same folder as the website
+    os.chdir(directory)
+
+    # Cleanup
+    # Create _test_sites folder if it doesn't exist. Otherwise delete and remake
+    if not os.path.exists("_test_sites"):
+        os.mkdir("_test_sites")
+    else:
+        os.system("rm -rf _test_sites")
+        os.mkdir("_test_sites")
+
+    # Loop through each group and build
+    for group in test_groups:
+        # Group name is a combination of all the test group names without the file extensions
+        # and without _config_test_, and with _site appended to the end
+        group_name = "_".join([g.split(".")[0].slpit("_")[-1] for g in group])
+
+        # Call the jekyll build function
+        os.system(f"bundle exec jekyll build --config _config.yml,{','.join(group)}")
+
+        # Rename build directory to group_name
+        os.rename("_site", group_name)
+
+        # Move to desired folder
+        os.system(f"mv {group_name} _test_sites")
+
+        # Add path to the site to the list
+        site_path.append(os.path.join(directory + "/_test_sites", group_name))
+
+    # Change back to the original directory
+    ow.chdir(old_dir)
+
+    return site_paths
+```
+
+And there you have it. A rather simple script, that should save you a lot of time manually typing out build commands. The only thing left to do is call all those functions.
+
+```python
+if __name__ == "__main__":
+    working_dir = get_working_directory()
+    test_groups = get_test_groups(working_dir)
+    site_paths = gen_test_sites(working_dir, test_groups)
+
+    # Make site paths a valid JSON string
+    site_paths = str(site_paths).replace("'", '"')
+    print(site_paths)
+```
+
 The full script is available [here](https://github.com/Jacob-MacMillan-Software/jacob-macmillan-software.github.io/blob/25661ba043f190225d446929af14183aedcba888/scripts/gen-test-sites/src/main.py){:target="_blank"}.
+
+If you have any questions or comments, please feel free to email me at [me@jacobmacmillan.xyz](mailto:me@jacobmacmillan.xyz){:target="_blank"}.
